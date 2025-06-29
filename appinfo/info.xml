@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<info xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:noNamespaceSchemaLocation="https://apps.nextcloud.com/schema/apps/info.xsd">
+    <id>deskbooking</id>
+    <name>Desk Booking</name>
+    <summary>Book office desks for custom timeslots</summary>
+    <description><![CDATA[
+    A comprehensive desk booking system for office spaces. Features include:
+    - Book desks for custom time slots
+    - Configurable number of desks
+    - Global visibility of all bookings
+    - Real-time booking status updates
+    - Admin configuration panel
+    ]]></description>
+    <version>1.0.0</version>
+    <licence>agpl</licence>
+    <author mail="mail@moregeo.it" homepage="https://moregeo.it">moreGeo</author>
+    <namespace>DeskBooking</namespace>
+    <category>office</category>
+    <category>organization</category>
+    <bugs>https://github.com/moregeo-it/deskbooking/issues</bugs>
+    <dependencies>
+        <nextcloud min-version="28" max-version="99"/>
+    </dependencies>
+    <navigations>
+        <navigation>
+            <name>Desk Booking</name>
+            <route>deskbooking.page.index</route>
+            <icon>app.svg</icon>
+        </navigation>
+    </navigations>
+    <settings>
+        <admin>OCA\DeskBooking\Settings\AdminSettings</admin>
+        <admin-section>OCA\DeskBooking\Settings\AdminSection</admin-section>
+    </settings>
+</info>

@@ -1,0 +1,39 @@
+{
+  "name": "deskbooking",
+  "version": "1.0.0",
+  "description": "Nextcloud app for booking office desks",
+  "main": "js/main.js",
+  "scripts": {
+    "build": "echo 'Building Nextcloud app...'",
+    "dev": "echo 'Development mode - watching files...'",
+    "test": "echo 'No tests specified'",
+    "lint": "echo 'Linting JavaScript files...'",
+    "validate": "php -l lib/**/*.php"
+  },
+  "keywords": [
+    "nextcloud",
+    "app",
+    "desk",
+    "booking",
+    "office",
+    "reservation"
+  ],
+  "author": "Developer",
+  "license": "AGPL-3.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/moregeo-it/deskbooking.git"
+  },
+  "bugs": {
+    "url": "https://github.com/moregeo-it/deskbooking/issues"
+  },
+  "homepage": "https://github.com/moregeo-it/deskbooking#readme",
+  "devDependencies": {
+    "eslint": "^8.0.0",
+    "prettier": "^2.0.0"
+  },
+  "engines": {
+    "php": ">=8.0",
+    "nextcloud": ">=25"
+  }
+}

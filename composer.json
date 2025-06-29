@@ -1,0 +1,21 @@
+{
+    "name": "moregeo/deskbooking",
+    "description": "Nextcloud Desk Booking App",
+    "type": "project",
+    "license": "AGPL-3.0",
+    "authors": [
+        {
+            "name": "moreGeo",
+            "email": "mail@moregeo.it"
+        }
+    ],
+    "require": {
+        "php": ">=8.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "OCA\\DeskBooking\\": "lib/"
+        }
+    },
+    "minimum-stability": "stable"
+}

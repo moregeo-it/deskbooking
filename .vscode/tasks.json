@@ -1,0 +1,16 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"label": "Build Nextcloud App",
+			"type": "shell",
+			"command": "echo",
+			"args": [
+				"Nextcloud Desk Booking app is ready! To deploy: 1) Copy this folder to your Nextcloud apps/ directory 2) Enable the app in Nextcloud Admin > Apps"
+			],
+			"group": "build",
+			"isBackground": false,
+			"problemMatcher": []
+		}
+	]
+}
