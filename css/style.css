@@ -522,7 +522,7 @@ button.secondary:hover {
     white-space: nowrap;
 }
 
-/* Table-based calendar styles - desk-based columns for 3-day view */
+/* Table-based calendar styles - responsive desk-based columns (1-7 days) */
 .calendar-table-container {
     width: 100%;
     overflow-x: auto;
@@ -926,6 +926,86 @@ button.secondary:hover {
     
     .calendar-table .booking-notes {
         display: none; /* Hide notes on very small screens */
+    }
+}
+
+/* Responsive adjustments for calendar table */
+@media (max-width: 1400px) {
+    .calendar-table {
+        font-size: 11px;
+    }
+    .calendar-table .desk-header {
+        min-width: 100px;
+    }
+}
+
+@media (max-width: 1200px) {
+    .calendar-table {
+        font-size: 10px;
+    }
+    .calendar-table .desk-header {
+        min-width: 90px;
+    }
+    .calendar-table .time-header {
+        width: 70px;
+        min-width: 70px;
+    }
+}
+
+@media (max-width: 992px) {
+    .calendar-table {
+        font-size: 9px;
+    }
+    .calendar-table .desk-header {
+        min-width: 80px;
+    }
+    .calendar-table .time-header {
+        width: 60px;
+        min-width: 60px;
+    }
+}
+
+@media (max-width: 768px) {
+    .calendar-table {
+        font-size: 8px;
+    }
+    .calendar-table .desk-header {
+        min-width: 70px;
+    }
+    .calendar-table .time-header {
+        width: 50px;
+        min-width: 50px;
+    }
+    .calendar-header h3 {
+        font-size: 16px;
+    }
+    .calendar-nav button {
+        padding: 6px 8px;
+        font-size: 12px;
+    }
+}
+
+@media (max-width: 576px) {
+    .calendar-table {
+        font-size: 7px;
+    }
+    .calendar-table .desk-header {
+        min-width: 60px;
+    }
+    .calendar-table .time-header {
+        width: 40px;
+        min-width: 40px;
+    }
+    .calendar-header h3 {
+        font-size: 14px;
+    }
+    .calendar-nav {
+        flex-direction: column;
+        gap: 8px;
+    }
+    .calendar-nav button {
+        padding: 4px 6px;
+        font-size: 11px;
     }
 }
 

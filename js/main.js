@@ -9,6 +9,7 @@ class DeskBookingApp {
         this.desks = [];
         this.bookings = [];
         this.currentUser = null;
+        this.daysToShow = this.calculateDaysToShow(); // Add responsive days calculation
         
         this.init();
     }
@@ -17,6 +18,7 @@ class DeskBookingApp {
         await this.loadInitialData();
         this.setupEventListeners();
         this.renderView();
+        this.setupResizeListener(); // Initialize resize listener
     }
 
     async loadInitialData() {
@@ -591,15 +593,16 @@ class DeskBookingApp {
     }
 
     renderCalendarView(container) {
-        // Desk-based calendar implementation for 3-day view
+        // Desk-based calendar implementation with responsive day count
+        const dayText = this.daysToShow === 1 ? 'Day' : 'Days';
         container.innerHTML = `
             <div class="calendar-view">
                 <div class="calendar-header">
-                    <h3>3-Day Desk View</h3>
+                    <h3 id="calendar-title">${this.daysToShow}-${dayText} Desk View</h3>
                     <div class="calendar-nav">
-                        <button id="prev-days-btn">&lt; Previous 3 Days</button>
+                        <button id="prev-days-btn">&lt; Previous ${this.daysToShow} ${dayText}</button>
                         <span id="current-days"></span>
-                        <button id="next-days-btn">Next 3 Days &gt;</button>
+                        <button id="next-days-btn">Next ${this.daysToShow} ${dayText} &gt;</button>
                     </div>
                 </div>
                 <div class="calendar-table-container">
@@ -637,9 +640,21 @@ class DeskBookingApp {
         }
 
         try {
-            // Get 3 days starting from current date
+            // Update header text when calendar updates
+            const calendarTitle = document.getElementById('calendar-title');
+            const prevBtn = document.getElementById('prev-days-btn');
+            const nextBtn = document.getElementById('next-days-btn');
+            
+            if (calendarTitle && prevBtn && nextBtn) {
+                const dayText = this.daysToShow === 1 ? 'Day' : 'Days';
+                calendarTitle.textContent = `${this.daysToShow}-${dayText} Desk View`;
+                prevBtn.innerHTML = `&lt; Previous ${this.daysToShow} ${dayText}`;
+                nextBtn.innerHTML = `Next ${this.daysToShow} ${dayText} &gt;`;
+            }
+
+            // Get dynamic number of days starting from current date
             const days = [];
-            for (let i = 0; i < 3; i++) {
+            for (let i = 0; i < this.daysToShow; i++) {
                 const day = new Date(this.currentDate);
                 day.setDate(this.currentDate.getDate() + i);
                 days.push(day);
@@ -647,7 +662,7 @@ class DeskBookingApp {
 
             // Update date range display
             const startDate = days[0].toLocaleDateString();
-            const endDate = days[2].toLocaleDateString();
+            const endDate = days[days.length - 1].toLocaleDateString();
             daysSpan.textContent = `${startDate} - ${endDate}`;
 
             // Get active desks
@@ -879,7 +894,7 @@ class DeskBookingApp {
 
     previousDays() {
         try {
-            this.currentDate.setDate(this.currentDate.getDate() - 3);
+            this.currentDate.setDate(this.currentDate.getDate() - this.daysToShow);
             this.updateCalendar();
         } catch (error) {
             console.error('Error navigating to previous days:', error);
@@ -888,7 +903,7 @@ class DeskBookingApp {
 
     nextDays() {
         try {
-            this.currentDate.setDate(this.currentDate.getDate() + 3);
+            this.currentDate.setDate(this.currentDate.getDate() + this.daysToShow);
             this.updateCalendar();
         } catch (error) {
             console.error('Error navigating to next days:', error);
@@ -901,6 +916,40 @@ class DeskBookingApp {
 
     showSuccess(message) {
         OC.Notification.showTemporary(message, { type: 'success' });
+    }
+
+    calculateDaysToShow() {
+        const width = window.innerWidth;
+        
+        // Responsive breakpoints for different screen sizes
+        // Based on common bootstrap breakpoints with desk booking considerations
+        if (width >= 1400) return 7;      // XXL screens: Full week view
+        if (width >= 1200) return 5;      // XL screens: Work week view
+        if (width >= 992) return 4;       // Large screens: 4-day view
+        if (width >= 768) return 3;       // Medium screens: 3-day view
+        if (width >= 576) return 2;       // Small screens: 2-day view
+        return 1;                         // Mobile/XS: Single day view
+    }
+
+    setupResizeListener() {
+        let resizeTimeout;
+        const handleResize = () => {
+            clearTimeout(resizeTimeout);
+            resizeTimeout = setTimeout(() => {
+                const newDaysToShow = this.calculateDaysToShow();
+                if (newDaysToShow !== this.daysToShow) {
+                    console.log(`Calendar view changed: ${this.daysToShow} → ${newDaysToShow} days (width: ${window.innerWidth}px)`);
+                    this.daysToShow = newDaysToShow;
+                    if (this.currentView === 'calendar') {
+                        this.updateCalendar();
+                    }
+                }
+            }, 250); // Debounce resize events
+        };
+
+        // Listen for both resize and orientation change events
+        window.addEventListener('resize', handleResize);
+        window.addEventListener('orientationchange', handleResize);
     }
 
     // Predefined colors for desks
